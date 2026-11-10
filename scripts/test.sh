@@ -9,7 +9,7 @@ cd -- "$root"
 fail=0
 
 printf '== node tests ==\n'
-node --test tests/ || fail=1
+node --test tests/*.test.js || fail=1
 
 printf '\n== QML parse ==\n'
 qmllint_bin=/usr/lib/qt6/bin/qmllint

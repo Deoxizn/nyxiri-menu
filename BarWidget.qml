@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Effects
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // The Nyxiri menu trigger. Upstream is a single hardcoded Nerd Font glyph; this

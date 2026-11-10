@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "devi.menu",
+  "name": "Nyxiri menu",
+  "version": "0.1.0",
+  "author": "Deoxizn",
+  "description": "The Omarchy command menu with Nyxiri settings rows and a customizable trigger icon",
+  "kinds": [
+    "menu",
+    "bar-widget"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "menu": "Menu.qml",
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Nyxiri menu",
+    "description": "Launches the Nyxiri-aware Omarchy menu",
+    "category": "Compositor",
+    "allowMultiple": false
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.menu"
+  }
+}

@@ -36,7 +36,12 @@ BarWidget {
     : glyphKind === "custom" ? customGlyph
     : "\ue900"
 
-  implicitWidth: button.implicitWidth
+  // The slot is sized by the button in glyph/image mode, but a wordmark is
+  // wider than the button's zero-width-space text, so the pill never grew
+  // to fit it. Measure the wordmark text instead in that mode.
+  implicitWidth: root.iconMode === "wordmark"
+    ? wordmarkText.implicitWidth + Style.space(16)
+    : button.implicitWidth
   implicitHeight: button.implicitHeight
 
   // The button owns size, hover chrome and input; the icon paints over it.
@@ -72,6 +77,7 @@ BarWidget {
     }
 
     Text {
+      id: wordmarkText
       anchors.centerIn: parent
       visible: root.iconMode === "wordmark"
       text: root.wordmark

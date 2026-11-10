@@ -62,4 +62,5 @@ test("the trigger reads its icon settings and opens devi.nyxiri-menu", () => {
   assert.match(widget, /shell toggle devi\.nyxiri-menu/)
   assert.match(widget, /MultiEffect/)
   assert.match(widget, /colorization/)
+  assert.match(widget, /wordmarkText\.implicitWidth/)
 })

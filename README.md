@@ -11,7 +11,7 @@ It still opens and behaves like the normal Omarchy menu: `omarchy menu`, the
 menu keybindings, and the three-finger gesture all resolve to the enabled menu
 clone.
 
-The plugin id is `devi.menu` and the manifest declares
+The plugin id is `devi.nyxiri-menu` and the manifest declares
 `omarchy.clonedFrom: "omarchy.menu"`, so enabling it disables the stock menu
 automatically.
 
@@ -22,9 +22,14 @@ git clone https://github.com/Deoxizn/nyxiri-menu.git
 cd nyxiri-menu
 scripts/install.sh
 omarchy-shell shell rescanPlugins
-omarchy plugin enable devi.menu
-omarchy bar put devi.menu
+omarchy plugin enable devi.nyxiri-menu
+omarchy bar put devi.nyxiri-menu
 ```
+
+The default install is a real git checkout, so `omarchy plugin update`
+works on it. Live-edit with `scripts/install.sh --link` instead, but note a
+symlinked install always fails `omarchy plugin update` validation:
+Omarchy's validator refuses symlinks inside a plugin folder.
 
 Requires the [Nyxiri bar](https://github.com/Deoxizn/nyxiri) for the settings
 rows to do anything. Without it the menu still works; the Nyxiri rows report a
@@ -33,7 +38,7 @@ failed IPC call.
 Go back with:
 
 ```sh
-omarchy plugin disable devi.menu
+omarchy plugin disable devi.nyxiri-menu
 omarchy plugin enable omarchy.menu
 ```
 
@@ -73,10 +78,10 @@ The bar widget reads these inline settings from its `shell.json` layout entry:
 For example:
 
 ```sh
-omarchy bar set devi.menu iconMode image
-omarchy bar set devi.menu iconSource /home/me/Pictures/nyxiri.svg
-omarchy bar set devi.menu tint true
-omarchy bar set devi.menu glyph arch
+omarchy bar set devi.nyxiri-menu iconMode image
+omarchy bar set devi.nyxiri-menu iconSource /home/me/Pictures/nyxiri.svg
+omarchy bar set devi.nyxiri-menu tint true
+omarchy bar set devi.nyxiri-menu glyph arch
 ```
 
 Left-click opens the menu (passing `hoverOpen` in the summon payload);

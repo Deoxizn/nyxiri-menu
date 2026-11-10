@@ -37,7 +37,7 @@ test("MenuModel.js is unmodified upstream", () => {
 
 test("manifest is a menu clone with the Nyxiri id", () => {
   const manifest = JSON.parse(read("manifest.json"))
-  assert.equal(manifest.id, "devi.menu")
+  assert.equal(manifest.id, "devi.nyxiri-menu")
   assert.deepEqual(manifest.kinds, ["menu", "bar-widget"])
   assert.equal(manifest.omarchy.clonedFrom, "omarchy.menu")
   assert.equal(manifest.entryPoints.menu, "Menu.qml")
@@ -53,13 +53,13 @@ test("the menu keeps the stock entry points and adds Nyxiri rows", () => {
   assert.match(menu, /property int hoverDwell: 400/)
 })
 
-test("the trigger reads its icon settings and opens devi.menu", () => {
+test("the trigger reads its icon settings and opens devi.nyxiri-menu", () => {
   const widget = read("BarWidget.qml")
-  assert.match(widget, /moduleName: "devi\.menu"/)
+  assert.match(widget, /moduleName: "devi\.nyxiri-menu"/)
   for (const key of ["iconMode", "glyph", "customGlyph", "iconSource", "wordmark", "tint", "hoverOpen"]) {
     assert.match(widget, new RegExp(`setting\\("${key}"`), key)
   }
-  assert.match(widget, /shell toggle devi\.menu/)
+  assert.match(widget, /shell toggle devi\.nyxiri-menu/)
   assert.match(widget, /MultiEffect/)
   assert.match(widget, /colorization/)
 })

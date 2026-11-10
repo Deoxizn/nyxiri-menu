@@ -17,11 +17,11 @@ import qs.Ui
 //   tint        recolour an image with the bar foreground (default true)
 //   hoverOpen   pass true/false to the menu payload (default true)
 //
-// Set them with `omarchy bar set devi.menu <key> <value>`, or from Nyxiri's
+// Set them with `omarchy bar set devi.nyxiri-menu <key> <value>`, or from Nyxiri's
 // settings card once it exposes the menu rows.
 BarWidget {
   id: root
-  moduleName: "devi.menu"
+  moduleName: "devi.nyxiri-menu"
 
   readonly property string iconMode: String(setting("iconMode", "glyph"))
   readonly property string glyphKind: String(setting("glyph", "omarchy"))
@@ -50,7 +50,7 @@ BarWidget {
     onPressed: function(mouse) {
       if (!root.bar) return
       if (mouse === Qt.RightButton) root.bar.run("xdg-terminal-exec")
-      else root.bar.run("omarchy-shell shell toggle devi.menu '{\"menu\":\"root\",\"hoverOpen\":" + (root.hoverOpen ? "true" : "false") + "}'")
+      else root.bar.run("omarchy-shell shell toggle devi.nyxiri-menu '{\"menu\":\"root\",\"hoverOpen\":" + (root.hoverOpen ? "true" : "false") + "}'")
     }
   }
 

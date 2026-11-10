@@ -18,18 +18,18 @@ automatically.
 ## Install
 
 ```sh
-git clone https://github.com/Deoxizn/nyxiri-menu.git
-cd nyxiri-menu
-scripts/install.sh
+omarchy plugin add https://github.com/Deoxizn/nyxiri-menu.git --enable
 omarchy-shell shell rescanPlugins
-omarchy plugin enable devi.nyxiri-menu
 omarchy bar put devi.nyxiri-menu
 ```
 
-The default install is a real git checkout, so `omarchy plugin update`
-works on it. Live-edit with `scripts/install.sh --link` instead, but note a
-symlinked install always fails `omarchy plugin update` validation:
-Omarchy's validator refuses symlinks inside a plugin folder.
+`omarchy plugin add` is the install: it clones a real checkout (so
+`omarchy plugin update` works), validates the manifest, and `--enable`
+switches the plugin on. `scripts/install.sh` in this repo is just a
+wrapper around that command. Live-edit with `scripts/install.sh --link`
+instead, but note a symlinked install always fails `omarchy plugin
+update` validation: Omarchy's validator refuses symlinks inside a
+plugin folder.
 
 Requires the [Nyxiri bar](https://github.com/Deoxizn/nyxiri) for the settings
 rows to do anything. Without it the menu still works; the Nyxiri rows report a

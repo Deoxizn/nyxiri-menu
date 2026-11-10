@@ -1,34 +1,47 @@
 #!/usr/bin/env bash
-# Install the Nyxiri menu fork. Enabling it makes the shell resolve
+# Install the Nyxiri menu fork. Preferred install is Omarchy's own command,
+# and this script is just a wrapper around it:
+#
+#   omarchy plugin add https://github.com/Deoxizn/nyxiri-menu.git --enable
+#
+# That clones a real checkout (so `omarchy plugin update` works) and
+# validates the manifest. Enabling it makes the shell resolve
 # `omarchy.menu` to this clone and disables the stock menu automatically.
-# The default is a real git clone of the repo's origin: a proper checkout
-# under ~/.config/omarchy/plugins/devi.nyxiri-menu, so `omarchy plugin
-# update` works. A symlinked install (--link) is convenient while editing,
-# but Omarchy's plugin validator refuses symlinks inside a plugin folder,
-# so `omarchy plugin update` always fails validation (and rolls back) on one.
+# Re-running install removes any existing install first, because
+# `plugin add` refuses when the id is already installed.
+#
+# --link is the live-editing escape hatch: a symlinked install, but note
+# Omarchy's validator refuses symlinks inside a plugin folder, so
+# `omarchy plugin update` always fails validation (and rolls back) on one.
 set -euo pipefail
 
 root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 target=${NYXIRI_MENU_PLUGIN_DIR:-$HOME/.config/omarchy/plugins/devi.nyxiri-menu}
-mode=clone
+mode=add
+menu_repo=${NYXIRI_MENU_REPO:-https://github.com/Deoxizn/nyxiri-menu.git}
+yes_flags=()
 
 usage() {
-  cat <<USAGE
-Usage: scripts/install.sh [--clone|--link|--copy] [--target DIR]
+  cat <<'USAGE'
+Usage: scripts/install.sh [--add|--clone|--link|--copy] [--yes] [--target DIR]
 
-  --clone  git clone the repo origin into the plugin directory (default)
+  --add    omarchy plugin add <url> --enable (default)
+  --clone  git clone the repo origin into the plugin directory
   --link   symlink this checkout to the plugin directory (live editing;
            `omarchy plugin update` will fail validation on a symlink)
   --copy   copy the plugin files instead (no .git, so no plugin updates)
-  --target install somewhere other than $target
+  --yes    pass --yes through to omarchy plugin add/remove (non-interactive)
+  --target DIR  install elsewhere (default ~/.config/omarchy/plugins/devi.nyxiri-menu)
 USAGE
 }
 
 while (( $# > 0 )); do
   case "$1" in
+    --add) mode=add; shift ;;
     --clone) mode=clone; shift ;;
     --link) mode=link; shift ;;
     --copy) mode=copy; shift ;;
+    --yes) yes_flags=(--yes); shift ;;
     --target) target=${2:?--target needs a directory}; shift 2 ;;
     -h|--help) usage; exit 0 ;;
     *) printf 'install: unknown option: %s\n' "$1" >&2; exit 1 ;;
@@ -42,7 +55,20 @@ mkdir -p -- "$(dirname -- "$target")"
   exit 1
 }
 
-if [[ $mode == clone ]]; then
+remove_if_installed() {
+  if [[ -e $target || -L $target ]]; then
+    omarchy plugin remove devi.nyxiri-menu "${yes_flags[@]}"
+  fi
+}
+
+if [[ $mode == add ]]; then
+  command -v omarchy >/dev/null 2>&1 || {
+    printf 'install: omarchy is not on PATH; use --clone, --link, or --copy instead\n' >&2
+    exit 1
+  }
+  remove_if_installed
+  omarchy plugin add "$menu_repo" --enable "${yes_flags[@]}"
+elif [[ $mode == clone ]]; then
   url=$(git -C "$root" config --get remote.origin.url || true)
   [[ -n $url ]] || {
     printf 'install: cannot determine the repo origin URL; use --link, --copy, or omarchy plugin add <url>\n' >&2

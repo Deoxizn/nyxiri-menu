@@ -45,7 +45,8 @@ omarchy plugin enable omarchy.menu
 ## Nyxiri submenu
 
 Hardcoded in `Menu.qml` (merged with the shipped JSONC menu), so it needs no
-extension file:
+extension file. The Nyxiri entry nests under **Appearance** (last row
+there), not at the bottom of the root menu:
 
 | Row | Action |
 | --- | --- |

@@ -102,10 +102,12 @@ Item {
   }
 
   // Hardcoded Nyxiri rows. They are merged with the shipped JSONC menu, so a
-  // user extension can still retitle or hide them.
+  // user extension can still retitle or hide them. The Nyxiri entry nests
+  // under Appearance (last row there), not at the bottom of the root menu:
+  // it is bar appearance, so it lives with Theme and Background.
   readonly property var nyxiriMenuRows: [
     {
-      id: "nyxiri", parent: "root", icon: "\ue900", iconFont: "omarchy",
+      id: "nyxiri", parent: "appearance", icon: "\ue900", iconFont: "omarchy",
       label: "Nyxiri", title: "Nyxiri",
       description: "Bar pills, monitor rules and widget scope"
     },

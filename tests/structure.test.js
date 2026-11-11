@@ -48,6 +48,9 @@ test("the menu keeps the stock entry points and adds Nyxiri rows", () => {
   const menu = read("Menu.qml")
   assert.match(menu, /property string pendingInitialMenu: "root"/)
   assert.match(menu, /id: "nyxiri"/)
+  // The Nyxiri entry nests under Appearance, not at the bottom of the root menu.
+  assert.match(menu, /id: "nyxiri", parent: "appearance"/)
+  assert.doesNotMatch(menu, /id: "nyxiri", parent: "root"/)
   assert.match(menu, /devi\.nyxiri openSettingsTab monitors/)
   assert.match(menu, /interval: root\.hoverDwell/)
   assert.match(menu, /property int hoverDwell: 400/)

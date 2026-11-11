@@ -127,6 +127,11 @@ Item {
       action: "omarchy-shell devi.nyxiri openSettingsTab monitors"
     },
     {
+      id: "nyxiri.workspaces", parent: "nyxiri", icon: "\udb80\udec1",
+      label: "Workspaces",
+      action: "omarchy-shell devi.nyxiri openSettingsTab workspaces"
+    },
+    {
       id: "nyxiri.widgets", parent: "nyxiri", icon: "\udb80\udf4b",
       label: "Widget scope",
       action: "omarchy-shell devi.nyxiri openSettingsTab widgets"

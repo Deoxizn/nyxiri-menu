@@ -53,6 +53,7 @@ there), not at the bottom of the root menu:
 | Nyxiri settings | `omarchy-shell devi.nyxiri openSettings` |
 | Bar appearance | Opens the card on the Appearance tab |
 | Monitor rules | Opens the card on the Monitors tab |
+| Workspaces | Opens the card on the Workspaces tab |
 | Widget scope | Opens the card on the Widgets tab |
 | Island pills everywhere | Sets all three sections to island |
 | Mini pills everywhere | Sets all three sections to mini |

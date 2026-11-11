@@ -52,6 +52,9 @@ test("the menu keeps the stock entry points and adds Nyxiri rows", () => {
   assert.match(menu, /id: "nyxiri", parent: "appearance"/)
   assert.doesNotMatch(menu, /id: "nyxiri", parent: "root"/)
   assert.match(menu, /devi\.nyxiri openSettingsTab monitors/)
+  // Every card tab has a menu shortcut, including Workspaces.
+  assert.match(menu, /id: "nyxiri\.workspaces"/)
+  assert.match(menu, /devi\.nyxiri openSettingsTab workspaces/)
   assert.match(menu, /interval: root\.hoverDwell/)
   assert.match(menu, /property int hoverDwell: 400/)
 })

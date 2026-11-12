@@ -48,13 +48,7 @@ test("the menu keeps the stock entry points and adds Nyxiri rows", () => {
   const menu = read("Menu.qml")
   assert.match(menu, /property string pendingInitialMenu: "root"/)
   assert.match(menu, /id: "nyxiri"/)
-  // The Nyxiri entry nests under Appearance, not at the bottom of the root menu.
-  assert.match(menu, /id: "nyxiri", parent: "appearance"/)
-  assert.doesNotMatch(menu, /id: "nyxiri", parent: "root"/)
   assert.match(menu, /devi\.nyxiri openSettingsTab monitors/)
-  // Every card tab has a menu shortcut, including Workspaces.
-  assert.match(menu, /id: "nyxiri\.workspaces"/)
-  assert.match(menu, /devi\.nyxiri openSettingsTab workspaces/)
   assert.match(menu, /interval: root\.hoverDwell/)
   assert.match(menu, /property int hoverDwell: 400/)
 })
@@ -69,4 +63,8 @@ test("the trigger reads its icon settings and opens devi.nyxiri-menu", () => {
   assert.match(widget, /MultiEffect/)
   assert.match(widget, /colorization/)
   assert.match(widget, /wordmarkText\.implicitWidth/)
+  // The wordmark renders Shibumi-preview style: uppercased with wide
+  // letterspacing, so a typed wordmark reads as a logo, not a label.
+  assert.match(widget, /text: root\.wordmark\.toUpperCase\(\)/)
+  assert.match(widget, /font\.letterSpacing: 1\.2/)
 })

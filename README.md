@@ -45,15 +45,13 @@ omarchy plugin enable omarchy.menu
 ## Nyxiri submenu
 
 Hardcoded in `Menu.qml` (merged with the shipped JSONC menu), so it needs no
-extension file. The Nyxiri entry nests under **Appearance** (last row
-there), not at the bottom of the root menu:
+extension file:
 
 | Row | Action |
 | --- | --- |
 | Nyxiri settings | `omarchy-shell devi.nyxiri openSettings` |
 | Bar appearance | Opens the card on the Appearance tab |
 | Monitor rules | Opens the card on the Monitors tab |
-| Workspaces | Opens the card on the Workspaces tab |
 | Widget scope | Opens the card on the Widgets tab |
 | Island pills everywhere | Sets all three sections to island |
 | Mini pills everywhere | Sets all three sections to mini |
@@ -73,7 +71,7 @@ The bar widget reads these inline settings from its `shell.json` layout entry:
 | `customGlyph` | any string | empty |
 | `iconFont` | font family for a custom glyph | `omarchy` |
 | `iconSource` | image or SVG path/URL | empty |
-| `wordmark` | text in wordmark mode | `Nyxiri` |
+| `wordmark` | text in wordmark mode, shown uppercased with wide letterSpacing | `Nyxiri` |
 | `tint` | recolour an image with the bar foreground | `true` |
 | `hoverOpen` | hover submenus for this trigger | `true` |
 

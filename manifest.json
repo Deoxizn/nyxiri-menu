@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "devi.nyxiri-menu",
   "name": "Nyxiri menu",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Deoxizn",
   "description": "The Omarchy command menu with Nyxiri settings rows and a customizable trigger icon",
   "kinds": [

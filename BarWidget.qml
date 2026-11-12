@@ -13,7 +13,8 @@ import qs.Ui
 //   customGlyph any string, used when glyph == "custom"
 //   iconFont    font family for a custom glyph   (default "omarchy")
 //   iconSource  image or SVG path/URL            (image mode)
-//   wordmark    text shown in wordmark mode      (default "Nyxiri")
+//   wordmark    text in wordmark mode, shown uppercased with wide
+//               letterSpacing, Shibumi-preview style (default "Nyxiri")
 //   tint        recolour an image with the bar foreground (default true)
 //   hoverOpen   pass true/false to the menu payload (default true)
 //
@@ -76,15 +77,19 @@ BarWidget {
       verticalAlignment: Text.AlignVCenter
     }
 
+    // Styled like Shibumi's wordmark preview: uppercased with wide
+    // letterspacing, so a typed wordmark reads as a logo, not a label.
+    // The stored value keeps its own case; only the display is capped.
     Text {
       id: wordmarkText
       anchors.centerIn: parent
       visible: root.iconMode === "wordmark"
-      text: root.wordmark
+      text: root.wordmark.toUpperCase()
       color: root.bar ? root.bar.foreground : Commons.Color.foreground
       font.family: root.bar ? root.bar.fontFamily : Style.font.family
       font.pixelSize: Style.font.body
       font.bold: true
+      font.letterSpacing: 1.2
       horizontalAlignment: Text.AlignHCenter
       verticalAlignment: Text.AlignVCenter
     }

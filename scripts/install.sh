@@ -16,7 +16,7 @@
 set -euo pipefail
 
 root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
-target=${NYXIRI_MENU_PLUGIN_DIR:-$HOME/.config/omarchy/plugins/devi.nyxiri-menu}
+target=${NYXIRI_MENU_PLUGIN_DIR:-$HOME/.config/omarchy/plugins/pizza.dirty.nyxiri-menu}
 mode=add
 menu_repo=${NYXIRI_MENU_REPO:-https://github.com/Deoxizn/nyxiri-menu.git}
 yes_flags=()
@@ -31,7 +31,7 @@ Usage: scripts/install.sh [--add|--clone|--link|--copy] [--yes] [--target DIR]
            `omarchy plugin update` will fail validation on a symlink)
   --copy   copy the plugin files instead (no .git, so no plugin updates)
   --yes    pass --yes through to omarchy plugin add/remove (non-interactive)
-  --target DIR  install elsewhere (default ~/.config/omarchy/plugins/devi.nyxiri-menu)
+  --target DIR  install elsewhere (default ~/.config/omarchy/plugins/pizza.dirty.nyxiri-menu)
 USAGE
 }
 
@@ -57,7 +57,7 @@ mkdir -p -- "$(dirname -- "$target")"
 
 remove_if_installed() {
   if [[ -e $target || -L $target ]]; then
-    omarchy plugin remove devi.nyxiri-menu "${yes_flags[@]}"
+    omarchy plugin remove pizza.dirty.nyxiri-menu "${yes_flags[@]}"
   fi
 }
 
@@ -90,6 +90,6 @@ fi
 
 printf '\nNext:\n'
 printf '  omarchy-shell shell rescanPlugins\n'
-printf '  omarchy plugin enable devi.nyxiri-menu\n'
-printf '  omarchy bar put devi.nyxiri-menu\n'
+printf '  omarchy plugin enable pizza.dirty.nyxiri-menu\n'
+printf '  omarchy bar put pizza.dirty.nyxiri-menu\n'
 printf '\nEnable moves the menu clone in and disables the stock omarchy.menu.\n'

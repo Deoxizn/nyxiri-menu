@@ -102,49 +102,42 @@ Item {
   }
 
   // Hardcoded Nyxiri rows. They are merged with the shipped JSONC menu, so a
-  // user extension can still retitle or hide them. The Nyxiri entry nests
-  // under Appearance (last row there), not at the bottom of the root menu:
-  // it is bar appearance, so it lives with Theme and Background.
+  // user extension can still retitle or hide them.
   readonly property var nyxiriMenuRows: [
     {
-      id: "nyxiri", parent: "appearance", icon: "\ue900", iconFont: "omarchy",
+      id: "nyxiri", parent: "root", icon: "\ue900", iconFont: "omarchy",
       label: "Nyxiri", title: "Nyxiri",
       description: "Bar pills, monitor rules and widget scope"
     },
     {
       id: "nyxiri.settings", parent: "nyxiri", icon: "\udb81\udf6d",
       label: "Nyxiri settings", aliases: ["nyxiri-settings"],
-      action: "omarchy-shell devi.nyxiri openSettings"
+      action: "omarchy-shell pizza.dirty.nyxiri openSettings"
     },
     {
       id: "nyxiri.appearance", parent: "nyxiri", icon: "\udb80\udf00",
       label: "Bar appearance",
-      action: "omarchy-shell devi.nyxiri openSettingsTab appearance"
+      action: "omarchy-shell pizza.dirty.nyxiri openSettingsTab appearance"
     },
     {
       id: "nyxiri.monitors", parent: "nyxiri", icon: "\udb81\udc37",
       label: "Monitor rules",
-      action: "omarchy-shell devi.nyxiri openSettingsTab monitors"
-    },
-    {
-      id: "nyxiri.workspaces", parent: "nyxiri", icon: "\udb80\udec1",
-      label: "Workspaces",
-      action: "omarchy-shell devi.nyxiri openSettingsTab workspaces"
+      action: "omarchy-shell pizza.dirty.nyxiri openSettingsTab monitors"
     },
     {
       id: "nyxiri.widgets", parent: "nyxiri", icon: "\udb80\udf4b",
       label: "Widget scope",
-      action: "omarchy-shell devi.nyxiri openSettingsTab widgets"
+      action: "omarchy-shell pizza.dirty.nyxiri openSettingsTab widgets"
     },
     {
       id: "nyxiri.island", parent: "nyxiri", icon: "\udb81\udc3d",
       label: "Island pills everywhere",
-      action: "omarchy-shell devi.nyxiri setSections island"
+      action: "omarchy-shell pizza.dirty.nyxiri setSections island"
     },
     {
       id: "nyxiri.mini", parent: "nyxiri", icon: "\udb80\udc89",
       label: "Mini pills everywhere",
-      action: "omarchy-shell devi.nyxiri setSections mini"
+      action: "omarchy-shell pizza.dirty.nyxiri setSections mini"
     },
     {
       id: "nyxiri.hover", parent: "nyxiri", icon: "\udb81\udf2c",

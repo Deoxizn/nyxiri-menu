@@ -37,7 +37,7 @@ test("MenuModel.js is unmodified upstream", () => {
 
 test("manifest is a menu clone with the Nyxiri id", () => {
   const manifest = JSON.parse(read("manifest.json"))
-  assert.equal(manifest.id, "devi.nyxiri-menu")
+  assert.equal(manifest.id, "pizza.dirty.nyxiri-menu")
   assert.deepEqual(manifest.kinds, ["menu", "bar-widget"])
   assert.equal(manifest.omarchy.clonedFrom, "omarchy.menu")
   assert.equal(manifest.entryPoints.menu, "Menu.qml")
@@ -48,18 +48,18 @@ test("the menu keeps the stock entry points and adds Nyxiri rows", () => {
   const menu = read("Menu.qml")
   assert.match(menu, /property string pendingInitialMenu: "root"/)
   assert.match(menu, /id: "nyxiri"/)
-  assert.match(menu, /devi\.nyxiri openSettingsTab monitors/)
+  assert.match(menu, /pizza\.dirty\.nyxiri openSettingsTab monitors/)
   assert.match(menu, /interval: root\.hoverDwell/)
   assert.match(menu, /property int hoverDwell: 400/)
 })
 
-test("the trigger reads its icon settings and opens devi.nyxiri-menu", () => {
+test("the trigger reads its icon settings and opens pizza.dirty.nyxiri-menu", () => {
   const widget = read("BarWidget.qml")
-  assert.match(widget, /moduleName: "devi\.nyxiri-menu"/)
+  assert.match(widget, /moduleName: "pizza\.dirty\.nyxiri-menu"/)
   for (const key of ["iconMode", "glyph", "customGlyph", "iconSource", "wordmark", "tint", "hoverOpen"]) {
     assert.match(widget, new RegExp(`setting\\("${key}"`), key)
   }
-  assert.match(widget, /shell toggle devi\.nyxiri-menu/)
+  assert.match(widget, /shell toggle pizza\.dirty\.nyxiri-menu/)
   assert.match(widget, /MultiEffect/)
   assert.match(widget, /colorization/)
   assert.match(widget, /wordmarkText\.implicitWidth/)
@@ -67,4 +67,9 @@ test("the trigger reads its icon settings and opens devi.nyxiri-menu", () => {
   // letterspacing, so a typed wordmark reads as a logo, not a label.
   assert.match(widget, /text: root\.wordmark\.toUpperCase\(\)/)
   assert.match(widget, /font\.letterSpacing: 1\.2/)
+})
+
+test("the manifest id is pizza.dirty.nyxiri-menu", () => {
+  const manifest = JSON.parse(read("manifest.json"))
+  assert.equal(manifest.id, "pizza.dirty.nyxiri-menu")
 })

@@ -11,7 +11,7 @@ It still opens and behaves like the normal Omarchy menu: `omarchy menu`, the
 menu keybindings, and the three-finger gesture all resolve to the enabled menu
 clone.
 
-The plugin id is `devi.nyxiri-menu` and the manifest declares
+The plugin id is `pizza.dirty.nyxiri-menu` and the manifest declares
 `omarchy.clonedFrom: "omarchy.menu"`, so enabling it disables the stock menu
 automatically.
 
@@ -20,7 +20,7 @@ automatically.
 ```sh
 omarchy plugin add https://github.com/Deoxizn/nyxiri-menu.git --enable
 omarchy-shell shell rescanPlugins
-omarchy bar put devi.nyxiri-menu
+omarchy bar put pizza.dirty.nyxiri-menu
 ```
 
 `omarchy plugin add` is the install: it clones a real checkout (so
@@ -38,7 +38,7 @@ failed IPC call.
 Go back with:
 
 ```sh
-omarchy plugin disable devi.nyxiri-menu
+omarchy plugin disable pizza.dirty.nyxiri-menu
 omarchy plugin enable omarchy.menu
 ```
 
@@ -49,7 +49,7 @@ extension file:
 
 | Row | Action |
 | --- | --- |
-| Nyxiri settings | `omarchy-shell devi.nyxiri openSettings` |
+| Nyxiri settings | `omarchy-shell pizza.dirty.nyxiri openSettings` |
 | Bar appearance | Opens the card on the Appearance tab |
 | Monitor rules | Opens the card on the Monitors tab |
 | Widget scope | Opens the card on the Widgets tab |
@@ -78,10 +78,10 @@ The bar widget reads these inline settings from its `shell.json` layout entry:
 For example:
 
 ```sh
-omarchy bar set devi.nyxiri-menu iconMode image
-omarchy bar set devi.nyxiri-menu iconSource /home/me/Pictures/nyxiri.svg
-omarchy bar set devi.nyxiri-menu tint true
-omarchy bar set devi.nyxiri-menu glyph arch
+omarchy bar set pizza.dirty.nyxiri-menu iconMode image
+omarchy bar set pizza.dirty.nyxiri-menu iconSource /home/me/Pictures/nyxiri.svg
+omarchy bar set pizza.dirty.nyxiri-menu tint true
+omarchy bar set pizza.dirty.nyxiri-menu glyph arch
 ```
 
 Left-click opens the menu (passing `hoverOpen` in the summon payload);

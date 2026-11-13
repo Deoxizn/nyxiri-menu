@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "devi.nyxiri-menu",
+  "id": "pizza.dirty.nyxiri-menu",
   "name": "Nyxiri menu",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "author": "Deoxizn",
   "description": "The Omarchy command menu with Nyxiri settings rows and a customizable trigger icon",
   "kinds": [

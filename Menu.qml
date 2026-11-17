@@ -105,7 +105,7 @@ Item {
   // user extension can still retitle or hide them.
   readonly property var nyxiriMenuRows: [
     {
-      id: "nyxiri", parent: "root", icon: "\ue900", iconFont: "omarchy",
+      id: "nyxiri", parent: "appearance", icon: "\ue900", iconFont: "omarchy",
       label: "Nyxiri", title: "Nyxiri",
       description: "Bar pills, monitor rules and widget scope"
     },

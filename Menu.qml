@@ -101,60 +101,6 @@ Item {
     hoverCooldownTimer.restart()
   }
 
-  // Hardcoded Nyxiri rows. They are merged with the shipped JSONC menu, so a
-  // user extension can still retitle or hide them.
-  readonly property var nyxiriMenuRows: [
-    {
-      id: "nyxiri", parent: "appearance", icon: "\ue900", iconFont: "omarchy",
-      label: "Nyxiri", title: "Nyxiri",
-      description: "Bar pills, monitor rules and widget scope"
-    },
-    {
-      id: "nyxiri.settings", parent: "nyxiri", icon: "\udb81\udf6d",
-      label: "Nyxiri settings", aliases: ["nyxiri-settings"],
-      action: "omarchy-shell pizza.dirty.nyxiri openSettings"
-    },
-    {
-      id: "nyxiri.appearance", parent: "nyxiri", icon: "\udb80\udf00",
-      label: "Bar appearance",
-      action: "omarchy-shell pizza.dirty.nyxiri openSettingsTab appearance"
-    },
-    {
-      id: "nyxiri.monitors", parent: "nyxiri", icon: "\udb81\udc37",
-      label: "Monitor rules",
-      action: "omarchy-shell pizza.dirty.nyxiri openSettingsTab monitors"
-    },
-    {
-      id: "nyxiri.widgets", parent: "nyxiri", icon: "\udb80\udf4b",
-      label: "Widget scope",
-      action: "omarchy-shell pizza.dirty.nyxiri openSettingsTab widgets"
-    },
-    {
-      id: "nyxiri.island", parent: "nyxiri", icon: "\udb81\udc3d",
-      label: "Island pills everywhere",
-      action: "omarchy-shell pizza.dirty.nyxiri setSections island"
-    },
-    {
-      id: "nyxiri.mini", parent: "nyxiri", icon: "\udb80\udc89",
-      label: "Mini pills everywhere",
-      action: "omarchy-shell pizza.dirty.nyxiri setSections mini"
-    },
-    {
-      id: "nyxiri.hover", parent: "nyxiri", icon: "\udb81\udf2c",
-      label: "Hover opens submenus",
-      checked: "[[ ! -f \"$HOME/.local/state/omarchy/toggles/nyxiri-hover-submenus-off\" ]]",
-      action: "f=\"$HOME/.local/state/omarchy/toggles/nyxiri-hover-submenus-off\"; if [[ -e $f ]]; then rm -f -- $f; else mkdir -p -- \"$(dirname -- $f)\"; touch -- $f; fi"
-    }
-  ]
-
-  function nyxiriItems() {
-    var out = []
-    for (var i = 0; i < root.nyxiriMenuRows.length; i++) {
-      var row = root.nyxiriMenuRows[i]
-      out.push(MenuModel.normalizeItem(row.id, row))
-    }
-    return out
-  }
   // NYXIRI-END nyxiri-menu-core
 
 
@@ -444,9 +390,7 @@ Item {
   // Catalog-only rebuilds pass skipGuards: retitling rows cannot change any
   // when/checked answer, so re-running the guard batch would be pure waste.
   function rebuildItemsFromSources(skipGuards) {
-    // NYXIRI-BEGIN nyxiri-menu-merge
-    var translatedDefaults = MenuModel.applyTranslations(root.defaultMenuItems.concat(root.nyxiriItems()), root.menuCatalog)
-    // NYXIRI-END nyxiri-menu-merge
+    var translatedDefaults = MenuModel.applyTranslations(root.defaultMenuItems, root.menuCatalog)
     // The root row is injected by the merge (it has no JSONC entry), so its
     // "Go" label comes from the catalog's root entry; the merge only uses
     // it for the injected row, never over a user-supplied heading.

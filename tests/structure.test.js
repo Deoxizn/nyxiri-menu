@@ -26,7 +26,7 @@ test("every NYXIRI-BEGIN block has a matching end", () => {
     }
   }
   assert.equal(open, null, open ? `unclosed block ${open.name}` : "")
-  for (const name of ["nyxiri-menu-core", "nyxiri-menu-merge", "nyxiri-open-payload"]) {
+  for (const name of ["nyxiri-menu-core", "nyxiri-open-payload"]) {
     assert.ok(seen.has(name), `missing ${name}`)
   }
 })
@@ -44,11 +44,14 @@ test("manifest is a menu clone with the Nyxiri id", () => {
   assert.equal(manifest.entryPoints.barWidget, "BarWidget.qml")
 })
 
-test("the menu keeps the stock entry points and adds Nyxiri rows", () => {
+test("the menu keeps the stock entry points and has no Nyxiri rows", () => {
   const menu = read("Menu.qml")
   assert.match(menu, /property string pendingInitialMenu: "root"/)
-  assert.match(menu, /id: "nyxiri"/)
-  assert.match(menu, /pizza\.dirty\.nyxiri openSettingsTab monitors/)
+  // No Nyxiri submenu: the bat on the bar opens settings now.
+  assert.doesNotMatch(menu, /id: "nyxiri"/)
+  assert.doesNotMatch(menu, /nyxiriMenuRows/)
+  assert.doesNotMatch(menu, /nyxiriItems\(\)/)
+  assert.doesNotMatch(menu, /pizza\.dirty\.nyxiri openSettings/)
   assert.match(menu, /interval: root\.hoverDwell/)
   assert.match(menu, /property int hoverDwell: 400/)
 })

@@ -50,15 +50,50 @@ done
 
 mkdir -p -- "$(dirname -- "$target")"
 
-[[ -n $target && $target != "/" && $target != "$HOME" ]] || {
-  printf 'install: refusing to replace %s\n' "$target" >&2
-  exit 1
+plugins_root=${HOME%/}/.config/omarchy/plugins
+
+# --target must stay inside the Omarchy plugins tree: anything outside it
+# (including $HOME itself or a path smuggled out via ..) is refused, since
+# every mode below does rm -rf on the target first.
+validate_target() {
+  local dir="$1"
+  local norm=${dir%/}
+  [[ -n $norm ]] || {
+    printf 'install: refusing to replace %s\n' "$dir" >&2
+    exit 1
+  }
+  case $norm in
+    *..*)
+      printf 'install: refusing target with .. component: %s\n' "$dir" >&2
+      exit 1
+      ;;
+  esac
+  case $norm in
+    "$plugins_root"/*)
+      ;;
+    *)
+      printf 'install: target must be under %s: %s\n' "$plugins_root" "$dir" >&2
+      exit 1
+      ;;
+  esac
 }
+
+validate_target "$target"
 
 remove_if_installed() {
   if [[ -e $target || -L $target ]]; then
     omarchy plugin remove pizza.dirty.nyxiri-menu "${yes_flags[@]}"
   fi
+}
+
+# Clone with the transport locked down: only https and ssh are allowed,
+# so a hostile origin URL (or a NYXIRI_MENU_REPO env var) cannot smuggle in
+# an ext::, file:, or other protocol handler. fsmonitor is off so the
+# clone cannot invoke an external watcher either.
+clone_repo() {
+  local url="$1" dir="$2"
+  GIT_ALLOW_PROTOCOL=https:ssh git -c protocol.allow=https:ssh \
+    -c core.fsmonitor=false clone -- "$url" "$dir"
 }
 
 if [[ $mode == add ]]; then
@@ -75,7 +110,7 @@ elif [[ $mode == clone ]]; then
     exit 1
   }
   rm -rf -- "$target"
-  git clone -- "$url" "$target"
+  clone_repo "$url" "$target"
   printf 'cloned %s -> %s\n' "$url" "$target"
 elif [[ $mode == link ]]; then
   rm -rf -- "$target"

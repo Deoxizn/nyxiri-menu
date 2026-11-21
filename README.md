@@ -2,6 +2,10 @@
 
 The main Omarchy menu (app launcher). Left-click the NYXIRI trigger on the bar to open it. Right-click opens a terminal.
 
+## Security note
+
+Menu definition files are code, not data. `action:` strings run as shell commands, and `when:` / `checked:` / `disabled:` guards are evaluated by a generated shell script, so anyone who can write a menu definition file gets code execution as your user. Only load menu files from sources you trust.
+
 ## Install
 
 ```sh

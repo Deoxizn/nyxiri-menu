@@ -1,8 +1,11 @@
 # Patches
 
 `Menu.qml` is a full upstream copy with `NYXIRI-BEGIN/END` blocks, not a
-context diff. `MenuModel.js` is kept byte-for-byte unmodified. `BarWidget.qml`
-and `manifest.json` are fork-owned files.
+context diff. `MenuModel.js` is upstream plus one Nyxiri security patch
+(the `NYXIRI-SECURITY` guard-id check in `guardLine`, which drops ids that
+are unsafe to interpolate into the generated bash script); everything else
+in it is byte-for-byte upstream. `BarWidget.qml` and `manifest.json` are
+fork-owned files.
 
 | Path | Meaning |
 | --- | --- |
@@ -10,7 +13,7 @@ and `manifest.json` are fork-owned files.
 | `upstream/MenuModel.js` | Pristine upstream model from the last merge |
 | `upstream/menu-manifest.json` | Upstream manifest, for reference |
 | `../Menu.qml` | Working copy: upstream plus Nyxiri blocks |
-| `../MenuModel.js` | Unmodified upstream copy |
+| `../MenuModel.js` | Upstream plus the `NYXIRI-SECURITY` guard-id patch |
 
 Block names in use:
 

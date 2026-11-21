@@ -563,7 +563,17 @@ function substituteGuardReaders(expression) {
   return expression
 }
 
+// NYXIRI-SECURITY: guard ids are interpolated into the generated bash
+// script and echoed back as `<id>:<tag>:<0|1>`, parsed by splitting on `:`.
+// An id carrying `:`, a newline, or shell metacharacters could forge
+// another row's answer or break out of the echo, so only ids made of
+// letters, digits, dot, underscore, and hyphen reach the script. Anything
+// else is skipped; its `when:` stays at the default (visible), the same
+// as a guard that never answered.
+var GUARD_ID_PATTERN = /^[A-Za-z0-9._-]+$/
+
 function guardLine(id, tag, expression) {
+  if (!GUARD_ID_PATTERN.test(String(id || ""))) return ""
   return "if { " + substituteGuardReaders(expression) + "; } >/dev/null 2>&1; then echo "
     + id + ":" + tag + ":1; else echo " + id + ":" + tag + ":0; fi\n"
 }
@@ -602,6 +612,9 @@ function guardScript(items) {
     if (entry.checked) lines.push(guardLine(ids[i], "c", entry.checked))
     if (entry.disabled) lines.push(guardLine(ids[i], "d", entry.disabled))
   }
+  // guardLine returns "" for ids that fail the safe pattern; drop those
+  // instead of leaving blank lines in the script.
+  lines = lines.filter(function (line) { return line !== "" })
   if (lines.length === 0) return ""
 
   var groups = []

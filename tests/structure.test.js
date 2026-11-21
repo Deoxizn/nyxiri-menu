@@ -31,8 +31,50 @@ test("every NYXIRI-BEGIN block has a matching end", () => {
   }
 })
 
-test("MenuModel.js is unmodified upstream", () => {
-  assert.equal(read("MenuModel.js"), read("upstream/MenuModel.js"))
+test("MenuModel.js differs from upstream only by the guard-id sanitization", () => {
+  // MenuModel.js is otherwise a pristine upstream copy, but the guard ids
+  // are interpolated into a generated bash script (F3), so ids that fail
+  // the safe pattern are dropped in guardLine. The test strips exactly
+  // that patch and requires everything else to be byte-identical, so an
+  // upstream rebase still shows up here as a failure.
+  const patch = `// NYXIRI-SECURITY: guard ids are interpolated into the generated bash
+// script and echoed back as \`<id>:<tag>:<0|1>\`, parsed by splitting on \`:\`.
+// An id carrying \`:\`, a newline, or shell metacharacters could forge
+// another row's answer or break out of the echo, so only ids made of
+// letters, digits, dot, underscore, and hyphen reach the script. Anything
+// else is skipped; its \`when:\` stays at the default (visible), the same
+// as a guard that never answered.
+var GUARD_ID_PATTERN = /^[A-Za-z0-9._-]+$/
+
+`
+  const guard = `  if (!GUARD_ID_PATTERN.test(String(id || ""))) return ""
+`
+  const filter = `  // guardLine returns "" for ids that fail the safe pattern; drop those
+  // instead of leaving blank lines in the script.
+  lines = lines.filter(function (line) { return line !== "" })
+`
+  const model = read("MenuModel.js")
+  assert.ok(model.includes(patch), "guard-id pattern block missing from MenuModel.js")
+  assert.ok(model.includes(guard), "guard-id check missing from guardLine")
+  assert.ok(model.includes(filter), "empty-line filter missing from guardScript")
+  const stripped = model.replace(patch, "").replace(guard, "").replace(filter, "")
+  assert.equal(stripped, read("upstream/MenuModel.js"))
+})
+
+test("guardScript drops ids that are unsafe in the generated bash", () => {
+  const MenuModel = require(path.join(root, "MenuModel.js"))
+  const script = MenuModel.guardScript({
+    "root.good-row": { when: "true" },
+    "bad:id": { when: "true" },
+    "evil\nforged:w:1": { when: "true" },
+    'evil"; touch /tmp/pwned; echo "': { when: "true" },
+  })
+  assert.match(script, /good-row:w:1/)
+  assert.doesNotMatch(script, /bad:id/)
+  assert.doesNotMatch(script, /forged/)
+  assert.doesNotMatch(script, /pwned/)
+  // A menu of only unsafe ids produces no script at all.
+  assert.equal(MenuModel.guardScript({ "bad:id": { when: "true" } }), "")
 })
 
 test("manifest is a menu clone with the Nyxiri id", () => {

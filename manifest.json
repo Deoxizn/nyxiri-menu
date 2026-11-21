@@ -4,7 +4,7 @@
   "name": "Nyxiri menu",
   "version": "0.2.0",
   "author": "Deoxizn",
-  "description": "The Omarchy command menu with Nyxiri settings rows and a customizable trigger icon",
+  "description": "The main Omarchy menu, opened from the NYXIRI wordmark trigger with a customizable trigger icon. Left-click opens the menu; right-click opens a terminal.",
   "kinds": [
     "menu",
     "bar-widget"

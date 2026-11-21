@@ -5,7 +5,7 @@ A fork of Omarchy's `omarchy.menu` plugin that:
 - makes the bar trigger icon customizable (glyph, image/SVG, wordmark, tint);
 - opens submenus on hover after a ~400 ms dwell.
 
-It is the main Omarchy menu (app launcher, opened from the NYXIRI wordmark trigger on the bar). It used to carry a hardcoded Nyxiri settings submenu; that is gone, settings live in the Nyxiri settings window opened from the bat icon on the bar.
+It is the main Omarchy menu (app launcher, opened from the NYXIRI wordmark trigger on the bar). Left-click the trigger opens the menu; right-click opens a terminal. It used to carry a hardcoded Nyxiri settings submenu; that is gone, settings live in the Nyxiri settings window opened from the bat icon on the bar.
 
 It still opens and behaves like the normal Omarchy menu: `omarchy menu`, the
 menu keybindings, and the three-finger gesture all resolve to the enabled menu
@@ -31,7 +31,7 @@ instead, but note a symlinked install always fails `omarchy plugin
 update` validation: Omarchy's validator refuses symlinks inside a
 plugin folder.
 
-The trigger settings are edited in the [Nyxiri bar](https://github.com/Deoxizn/nyxiri) settings window (Appearance tab, Menu Trigger section) or with `omarchy bar set`. Without the Nyxiri bar the menu still works; the settings are just edited from the command line.
+The trigger settings are edited in the [Nyxiri bar](https://github.com/Deoxizn/nyxiri) settings window (Menu tab, Menu Trigger section) or with `omarchy bar set`. Without the Nyxiri bar the menu still works; the settings are just edited from the command line.
 
 Go back with:
 
@@ -73,7 +73,7 @@ A row with children opens after the pointer rests on it for `hoverDwell`
 (400 ms). Moving off cancels. Search input suppresses hover-open so drilling
 does not lose the query.
 
-The default is on. Toggle it in the Nyxiri settings window (Appearance tab, Menu Trigger section, **Hover opens submenus**), which
+The default is on. Toggle it in the Nyxiri settings window (Menu tab, Menu Trigger section, **Hover opens submenus**), which
 creates or removes:
 
 ```

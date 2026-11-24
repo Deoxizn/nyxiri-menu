@@ -10,7 +10,7 @@ Menu definition files are code, not data. `action:` strings run as shell command
 
 ```sh
 omarchy plugin add https://github.com/Deoxizn/nyxiri-menu.git --enable
-omarchy-shell shell rescanPlugins
+hexciri-shell shell rescanPlugins
 omarchy bar put pizza.dirty.nyxiri-menu
 ```
 
@@ -18,7 +18,7 @@ To go back to the stock menu:
 
 ```sh
 omarchy plugin disable pizza.dirty.nyxiri-menu
-omarchy plugin enable omarchy.menu
+omarchy plugin enable hexciri.menu
 ```
 
 ## Trigger icon

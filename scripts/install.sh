@@ -16,7 +16,7 @@
 set -euo pipefail
 
 root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
-target=${NYXIRI_MENU_PLUGIN_DIR:-$HOME/.config/omarchy/plugins/pizza.dirty.nyxiri-menu}
+target=${NYXIRI_MENU_PLUGIN_DIR:-$HOME/.config/hexciri/plugins/pizza.dirty.nyxiri-menu}
 mode=add
 menu_repo=${NYXIRI_MENU_REPO:-https://github.com/Deoxizn/nyxiri-menu.git}
 yes_flags=()
@@ -31,7 +31,7 @@ Usage: scripts/install.sh [--add|--clone|--link|--copy] [--yes] [--target DIR]
            `omarchy plugin update` will fail validation on a symlink)
   --copy   copy the plugin files instead (no .git, so no plugin updates)
   --yes    pass --yes through to omarchy plugin add/remove (non-interactive)
-  --target DIR  install elsewhere (default ~/.config/omarchy/plugins/pizza.dirty.nyxiri-menu)
+  --target DIR  install elsewhere (default ~/.config/hexciri/plugins/pizza.dirty.nyxiri-menu)
 USAGE
 }
 
@@ -50,7 +50,7 @@ done
 
 mkdir -p -- "$(dirname -- "$target")"
 
-plugins_root=${HOME%/}/.config/omarchy/plugins
+plugins_root=${HOME%/}/.config/hexciri/plugins
 
 # --target must stay inside the Omarchy plugins tree: anything outside it
 # (including $HOME itself or a path smuggled out via ..) is refused, since
@@ -124,7 +124,7 @@ else
 fi
 
 printf '\nNext:\n'
-printf '  omarchy-shell shell rescanPlugins\n'
+printf '  hexciri-shell shell rescanPlugins\n'
 printf '  omarchy plugin enable pizza.dirty.nyxiri-menu\n'
 printf '  omarchy bar put pizza.dirty.nyxiri-menu\n'
-printf '\nEnable moves the menu clone in and disables the stock omarchy.menu.\n'
+printf '\nEnable moves the menu clone in and disables the stock hexciri.menu.\n'

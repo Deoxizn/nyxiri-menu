@@ -56,7 +56,7 @@ BarWidget {
     onPressed: function(mouse) {
       if (!root.bar) return
       if (mouse === Qt.RightButton) root.bar.run("xdg-terminal-exec")
-      else root.bar.run("omarchy-shell shell toggle pizza.dirty.nyxiri-menu '{\"menu\":\"root\",\"hoverOpen\":" + (root.hoverOpen ? "true" : "false") + "}'")
+      else root.bar.run("hexciri-shell shell toggle pizza.dirty.nyxiri-menu '{\"menu\":\"root\",\"hoverOpen\":" + (root.hoverOpen ? "true" : "false") + "}'")
     }
   }
 

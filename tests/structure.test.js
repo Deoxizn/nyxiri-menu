@@ -36,7 +36,11 @@ test("MenuModel.js differs from upstream only by the guard-id sanitization", () 
   // are interpolated into a generated bash script (F3), so ids that fail
   // the safe pattern are dropped in guardLine. The test strips exactly
   // that patch and requires everything else to be byte-identical, so an
-  // upstream rebase still shows up here as a failure.
+  // upstream rebase still shows up here as a failure. One Hexciri
+  // divergence is stripped the same way: summonAction's regex matches
+  // `hexciri-shell shell summon ...` (the forked shell rewrites the
+  // stock `omarchy-shell` call), and is mapped back to upstream before
+  // the comparison.
   const patch = `// NYXIRI-SECURITY: guard ids are interpolated into the generated bash
 // script and echoed back as \`<id>:<tag>:<0|1>\`, parsed by splitting on \`:\`.
 // An id carrying \`:\`, a newline, or shell metacharacters could forge
@@ -57,7 +61,10 @@ var GUARD_ID_PATTERN = /^[A-Za-z0-9._-]+$/
   assert.ok(model.includes(patch), "guard-id pattern block missing from MenuModel.js")
   assert.ok(model.includes(guard), "guard-id check missing from guardLine")
   assert.ok(model.includes(filter), "empty-line filter missing from guardScript")
-  const stripped = model.replace(patch, "").replace(guard, "").replace(filter, "")
+  const summonHexciri = `  var match = /^hexciri-shell shell summon ([A-Za-z0-9._-]+)(?: '([^']*)')?$/.exec(String(action || ""))\n`
+  const summonUpstream = `  var match = /^omarchy-shell shell summon ([A-Za-z0-9._-]+)(?: '([^']*)')?$/.exec(String(action || ""))\n`
+  assert.ok(model.includes(summonHexciri), "hexciri-shell summon regex missing from MenuModel.js")
+  const stripped = model.replace(patch, "").replace(guard, "").replace(filter, "").replace(summonHexciri, summonUpstream)
   assert.equal(stripped, read("upstream/MenuModel.js"))
 })
 

@@ -10,7 +10,7 @@ import "MenuModel.js" as MenuModel
 Item {
   id: root
 
-  // Injected by omarchy-shell when this plugin is summoned.
+  // Injected by hexciri-shell when this plugin is summoned.
   property string omarchyPath: Quickshell.env("OMARCHY_PATH")
   property var shell: null
   property var manifest: null
@@ -19,7 +19,7 @@ Item {
   // Submenus open when the pointer rests on a row, after a short dwell. The
   // toggle file lets the hardened default be turned off without a rebuild;
   // the bar widget can also pass `hoverOpen` in the summon payload.
-  readonly property string hoverFlagPath: Quickshell.env("HOME") + "/.local/state/omarchy/toggles/nyxiri-hover-submenus-off"
+  readonly property string hoverFlagPath: Quickshell.env("HOME") + "/.local/state/hexciri/toggles/nyxiri-hover-submenus-off"
   property bool hoverSubmenusDefault: true
   property bool hoverSubmenus: true
   // True when the summon payload fixes hover-open for this instance, so the
@@ -45,7 +45,7 @@ Item {
 
   Process {
     id: hoverProbe
-    command: ["bash", "-c", "[[ -f \"$HOME/.local/state/omarchy/toggles/nyxiri-hover-submenus-off\" ]] && echo off || echo on"]
+    command: ["bash", "-c", "[[ -f \"$HOME/.local/state/hexciri/toggles/nyxiri-hover-submenus-off\" ]] && echo off || echo on"]
     stdout: SplitParser {
       onRead: function(line) {
         root.hoverSubmenusDefault = String(line).trim() !== "off"
@@ -55,7 +55,7 @@ Item {
   }
 
   FileView {
-    path: Quickshell.env("HOME") + "/.local/state/omarchy/toggles"
+    path: Quickshell.env("HOME") + "/.local/state/hexciri/toggles"
     watchChanges: true
     printErrors: false
     onFileChanged: hoverProbe.running = true
@@ -105,7 +105,7 @@ Item {
 
 
   // Plugin lifecycle hooks. The host calls open(payloadJson) after
-  // `omarchy-shell shell summon omarchy.menu ...` and close() when hidden.
+  // `hexciri-shell shell summon hexciri.menu ...` and close() when hidden.
   property string pendingInitialMenu: "root"
 
   function open(payloadJson) {
@@ -150,16 +150,16 @@ Item {
   // JSONC menu definitions. The shell parses both at startup and merges
   // the user file on top of the defaults, so the keybind → IPC → visible
   // path doesn't have to shell out to bash + jq on every open.
-  property string defaultMenuPath: omarchyPath + "/default/omarchy/omarchy-menu.jsonc"
-  property string userMenuPath: Quickshell.env("HOME") + "/.config/omarchy/extensions/omarchy-menu.jsonc"
+  property string defaultMenuPath: omarchyPath + "/default/hexciri/hexciri-menu.jsonc"
+  property string userMenuPath: Quickshell.env("HOME") + "/.config/hexciri/extensions/hexciri-menu.jsonc"
   // Display language for the shipped rows. The code lives in
-  // ~/.config/omarchy/language (omarchy-language owns it); a missing file
+  // ~/.config/hexciri/language (the Setup > Language choice); a missing file
   // means English. The catalog at default/i18n/<code>/menu.json is applied
   // to the default items before the user extension merges on top, so a
   // user's own rows and retitles always win.
   property string language: "en"
   property var menuCatalog: ({})
-  readonly property string languagePath: Quickshell.env("OMARCHY_LANGUAGE_FILE") || ((Quickshell.env("XDG_CONFIG_HOME") || (Quickshell.env("HOME") + "/.config")) + "/omarchy/language")
+  readonly property string languagePath: Quickshell.env("OMARCHY_LANGUAGE_FILE") || ((Quickshell.env("XDG_CONFIG_HOME") || (Quickshell.env("HOME") + "/.config")) + "/hexciri/language")
   property var defaultMenuItems: []
   property var userMenuItems: []
   // Whether each file has answered once, loaded or (the user's) missing. At
@@ -417,6 +417,11 @@ Item {
   // turns those into menu items children of `menuId`. A `volatile` provider
   // re-runs every time its submenu is entered, so a font installed since the
   // shell started shows up without restarting it.
+  // Hexciri: the forked shell ships no hexciri-font-set/-current/-list,
+  // hexciri-powerprofiles-*, hexciri-kernel, or hexciri-language
+  // (none are in fork-shell.sh is_allowed_bin), so those provider rows
+  // come back empty on Hexciri until Hexciri ships them. The calls
+  // below stay omarchy-* deliberately; renaming them would be a lie.
   readonly property var providers: ({
     "fonts": {
       script: "current=$(omarchy-font-current 2>/dev/null); omarchy-font-list 2>/dev/null | while read -r f; do [[ -z $f ]] && continue; printf '%s\\t%s\\t%s\\n' \"$f\" \"$f\" \"$current\"; done",
@@ -1111,7 +1116,7 @@ Item {
   // ----------------------------------------------------------- route surface
   //
   // The menu is opened through the standard plugin lifecycle:
-  // `omarchy-shell shell summon omarchy.menu '{"menu":"system"}'`.
+  // `hexciri-shell shell summon hexciri.menu '{"menu":"system"}'`.
   // Callers may pass a real id (`system`, `setup.power`) or an alias declared
   // in JSONC (`power`, `reminder-set`). Unknown strings fall through to the
   // id-as-route behavior so misspellings still attempt to open the literal id.
@@ -1123,7 +1128,7 @@ Item {
     var id = root.resolveRoute(initialMenu)
     var entry = root.items[id]
     // If the resolved id is an action (i.e. the user invoked an alias for
-    // a leaf, e.g. `omarchy menu summon screenrecord-stop`), run it directly
+    // a leaf, e.g. `hexciri menu summon screenrecord-stop`), run it directly
     // instead of opening an action with no children.
     if (entry && entry.kind === "action" && entry.action) {
       root.cancel()
@@ -1247,7 +1252,7 @@ Item {
   }
 
   // The JSONC sources are watched so live edits to the default file (or the
-  // user extension at ~/.config/omarchy/extensions/omarchy-menu.jsonc) take
+  // user extension at ~/.config/hexciri/extensions/hexciri-menu.jsonc) take
   // effect without restarting the shell.
   FileView {
     id: defaultMenuFile

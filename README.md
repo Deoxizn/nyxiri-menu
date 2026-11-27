@@ -46,7 +46,3 @@ omarchy bar set pizza.dirty.nyxiri-menu glyph arch
 ## Hover submenus
 
 Submenus open when you rest the pointer on them for a moment. Turn it off in the Nyxiri bar settings window (Menu tab, **Hover opens submenus**).
-
-## Typo-tolerant search
-
-A search that finds nothing runs a second pass forgiving typos in name words: NFD diacritic and Hangul Jamo folding, a doubled-letter fast path (so `ffiles` finds Files), and Damerau-Levenshtein prefix matching (one typo from four codepoints, two from eight, with a swapped pair counting as one; edit distance is skipped for CJK ideograph/kana terms). A search that finds any exact match never shows typo results. Forward-ported from upstream Omarchy PR #19938.

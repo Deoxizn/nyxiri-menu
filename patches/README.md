@@ -15,14 +15,6 @@ fork-owned files.
 | `../Menu.qml` | Working copy: upstream plus Nyxiri blocks |
 | `../MenuModel.js` | Upstream plus the `NYXIRI-SECURITY` guard-id patch |
 
-Baseline note (2026-11-26): `upstream/` currently holds upstream main plus
-unmerged upstream PR #19938 (typo-tolerant menu search), applied here as a
-forward-port. The structure test requires the working copies to differ from
-`upstream/` only by the Nyxiri patch, so the PR lives in the baseline, not
-just in the working copies. When upstream merges the PR, `sync-upstream.sh`
-reconciles it: if upstream's version matches this port, the merge is clean;
-if it differs, `git merge-file` flags the conflict for review.
-
 Block names in use:
 
 - `nyxiri-menu-core` — hover timers, flag probe and hardcoded rows
